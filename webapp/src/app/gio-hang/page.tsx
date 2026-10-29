@@ -1,0 +1,1 @@
+import { CartView } from "@/components/cart";export const metadata={title:"Giỏ hàng"};export default function Page(){return <CartView/>}

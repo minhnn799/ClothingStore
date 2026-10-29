@@ -1,0 +1,97 @@
+@host = http://localhost:5000
+@accessToken = REPLACE_WITH_LOGIN_ACCESS_TOKEN
+@refreshToken = REPLACE_WITH_LOGIN_REFRESH_TOKEN
+@brandId = REPLACE_WITH_BRAND_ID
+@categoryId = REPLACE_WITH_CATEGORY_ID
+@productId = REPLACE_WITH_PRODUCT_ID
+@variantId = REPLACE_WITH_VARIANT_ID
+@orderId = REPLACE_WITH_ORDER_ID
+
+### Public catalog
+GET {{host}}/api/products?page=1&pageSize=20
+Accept: application/json
+
+### Register a customer
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{"email":"customer@example.com","password":"ChangeThis!Customer123"}
+
+### Log in (use bootstrap admin credentials for admin requests)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{"email":"customer@example.com","password":"ChangeThis!Customer123"}
+
+### Refresh
+POST {{host}}/api/auth/refresh
+Content-Type: application/json
+
+{"refreshToken":"{{refreshToken}}"}
+
+### Create brand (Admin)
+POST {{host}}/api/brands
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"name":"Everyday","slug":"everyday"}
+
+### Create category (Admin)
+POST {{host}}/api/categories
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"name":"T-Shirts","slug":"t-shirts","parentId":null}
+
+### Create product (Admin)
+POST {{host}}/api/products
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"name":"Cotton T-Shirt","slug":"cotton-t-shirt","sku":"TEE-001","brandId":"{{brandId}}","categoryId":"{{categoryId}}","description":"Everyday cotton tee","isActive":true}
+
+### Add size/color variant (Admin)
+POST {{host}}/api/products/{{productId}}/variants
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"sku":"TEE-001-M-BLUE","size":"M","color":"Blue","material":"100% cotton","price":25.50,"compareAtPrice":30.00,"stockQuantity":20,"isActive":true}
+
+### Set cart quantity (Customer)
+PUT {{host}}/api/cart/items
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"productVariantId":"{{variantId}}","quantity":2}
+
+### View cart
+GET {{host}}/api/cart
+Authorization: Bearer {{accessToken}}
+
+### Checkout (cash on delivery, free shipping)
+POST {{host}}/api/orders
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"customerName":"Test Customer","customerPhone":"+84901234567","shippingAddress":"123 Example Street"}
+
+### My orders
+GET {{host}}/api/orders
+Authorization: Bearer {{accessToken}}
+
+### Process order (Admin)
+PUT {{host}}/api/admin/orders/{{orderId}}/status
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{"status":"Processing"}
+
+### Cancel a pending order (owner)
+POST {{host}}/api/orders/{{orderId}}/cancel
+Authorization: Bearer {{accessToken}}
+
+### Logout
+POST {{host}}/api/auth/logout
+Content-Type: application/json
+
+{"refreshToken":"{{refreshToken}}"}

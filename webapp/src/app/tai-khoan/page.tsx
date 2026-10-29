@@ -1,0 +1,1 @@
+import { Suspense } from "react";import { Account } from "@/components/account";import { Loading } from "@/components/ui";export const metadata={title:"Tài khoản"};export default function Page(){return <Suspense fallback={<Loading/>}><Account/></Suspense>}
