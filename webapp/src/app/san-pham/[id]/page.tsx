@@ -1,0 +1,1 @@
+import { ProductDetail } from "@/components/product-detail";export const metadata={title:"Chi tiết sản phẩm"};export default async function Page({params}:{params:Promise<{id:string}>}){return <ProductDetail id={(await params).id}/>}

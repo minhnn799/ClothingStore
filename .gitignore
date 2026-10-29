@@ -18,3 +18,15 @@ secrets.json
 ## OS-generated files
 .DS_Store
 Thumbs.db
+.env
+**/uploads/
+TestResults/
+
+**/appsettings.Development.json
+webapp/node_modules/
+webapp/.next/
+webapp/.env*
+!webapp/.env.example
+**/*.tsbuildinfo
+.idea/
+.vs/

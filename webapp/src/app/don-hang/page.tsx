@@ -1,0 +1,1 @@
+import {Suspense} from "react";import {Orders} from "@/components/orders";import {Loading} from "@/components/ui";export const metadata={title:"Đơn hàng của bạn"};export default function Page(){return <Suspense fallback={<Loading/>}><Orders/></Suspense>}

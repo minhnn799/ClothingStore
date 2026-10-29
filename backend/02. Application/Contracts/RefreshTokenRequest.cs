@@ -1,0 +1,1 @@
+using System.ComponentModel.DataAnnotations; namespace _02._Application.Contracts; public sealed record RefreshTokenRequest([Required, MaxLength(512)] string RefreshToken);
